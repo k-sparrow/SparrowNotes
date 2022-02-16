@@ -1,6 +1,7 @@
 import { KeyboardArrowRight } from "@mui/icons-material";
 import { Button,  Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const classes = {
     field: {
@@ -11,6 +12,7 @@ const classes = {
 }
 
 function Create() {
+    const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [details, setDetails] = useState('');
     const [titleError, setTitleError] = useState(true);
@@ -48,7 +50,12 @@ function Create() {
         } else setDetailsError(true);
 
         if( title && details) {
-            console.log(title, details);
+            fetch('http://localhost:8000/notes', {
+                method: 'POST',
+                headers: {'Content-type': "application/json"},
+                body: JSON.stringify({title, details, category})
+            })
+            .then(() => navigate('/'));
         }
     }
     return (
