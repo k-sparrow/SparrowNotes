@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Grid, Paper } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 
@@ -14,12 +14,18 @@ function Notes() {
 
     return (
         <Container>
-        {notes.map((note) => {
-                return (
-                    <p key={note.id}>{note.title}</p>
-                );
-            })
-        }
+            <Grid container>
+                {notes.map((note) => {
+                        return (
+                            <Grid key={note.id} item xs={12} sm={6} lg={4}>
+                                <Paper>
+                                    <p >{note.title}</p>
+                                </Paper>
+                            </Grid>
+                        );
+                    })
+                }
+            </Grid>
         </Container>
     );
 }
