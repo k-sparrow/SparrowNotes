@@ -1,10 +1,9 @@
 import { AddCircleOutlineOutlined, SubjectOutlined } from "@mui/icons-material";
-import { AppBar, Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from "@mui/material";
+import { AppBar, Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography, Avatar } from "@mui/material";
 import { styled } from "@mui/system";
 import { format } from "date-fns";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
 
 const StyledMainDiv = styled('div', {
     name: "StyledMainDiv",
@@ -54,11 +53,12 @@ function Layout({children}) {
                         Today is the {format(new Date(), 'do MMMM y')}
                     </Typography>
                     <Typography>Dror</Typography>
+                    <Avatar alt="M" src="/images/latino-male.png" sx={{marginLeft: 1, width: 36, height: 36, backgroundColor: '#f4f4f4'}}/>
                 </Toolbar>
             </AppBar>
             <Drawer
                 variant="permanent"
-                // anchor="left"
+                anchor="left"
                 >
 
                 <div >
