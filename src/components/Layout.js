@@ -1,6 +1,7 @@
 import { AddCircleOutlineOutlined, SubjectOutlined } from "@mui/icons-material";
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { AppBar, Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography } from "@mui/material";
 import { styled } from "@mui/system";
+import { format } from "date-fns";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -15,6 +16,13 @@ const StyledMainDiv = styled('div', {
         padding: theme.spacing(6)
     });
 });
+
+
+const StyleMainTopBufferDiv = styled('div')(({theme}) => {
+    return ({
+        marginTop: theme.spacing(6)
+    });
+}) ;
 
 function Layout({children}) {
     const navigate = useNavigate();
@@ -34,6 +42,20 @@ function Layout({children}) {
     ]
     return (
         <div style={{display: 'flex', height: '100%'}}>
+            <AppBar
+                elevation={1}
+                sx={{
+                    width: (theme) => {return `calc(100% - ${240}px)`;},
+                    color: 'black',
+                    backgroundColor: 'white'
+                }}>
+                <Toolbar>
+                    <Typography sx={{flexGrow: 1}}>
+                        Today is the {format(new Date(), 'do MMMM y')}
+                    </Typography>
+                    <Typography>Dror</Typography>
+                </Toolbar>
+            </AppBar>
             <Drawer
                 variant="permanent"
                 // anchor="left"
@@ -65,7 +87,9 @@ function Layout({children}) {
                     }
                 </List>
             </Drawer>
+
             <StyledMainDiv>
+                <StyleMainTopBufferDiv />
                 {children}
             </StyledMainDiv>
         </div>
