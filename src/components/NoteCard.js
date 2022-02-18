@@ -1,6 +1,6 @@
 import {  DeleteOutlined } from "@mui/icons-material";
 import { Avatar, Card, CardContent, CardHeader, IconButton, Typography } from "@mui/material";
-import { yellow, blue, green, lightGreen } from "@mui/material/colors";
+import { yellow, blue,  red } from "@mui/material/colors";
 import React from "react";
 
 
@@ -17,7 +17,7 @@ const NoteCard = ({note, handleDelete}) => {
             break;
 
         case "todo":
-            noteColor =  lightGreen[500];
+            noteColor =  red[500];
             break;
         default:
             break;
@@ -48,7 +48,7 @@ const NoteCard = ({note, handleDelete}) => {
                     />
 
                 <CardContent>
-                    <Typography variant="body2" color="textSecondary">
+                    <Typography variant="body2" color="textSecondary" sx={{whiteSpace: 'pre-wrap'}}>
                         {note.details}
                     </Typography>
                 </CardContent>

@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material';
-import React from 'react';
 
 const drawerWidth = 240;
 
