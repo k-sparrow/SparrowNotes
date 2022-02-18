@@ -53,7 +53,9 @@ function Layout({children}) {
                                     button
                                     key={item.text}
                                     onClick={() => navigate(item.path)}
-                                    sx={location.pathname == item.path ? {backgroundColor: "#f4f4f4"} : null}
+                                    sx={  {
+                                        backgroundColor: location.pathname == item.path ? "#f4f4f4" : null
+                                     }}
                                     >
                                     <ListItemIcon>{item.icon}</ListItemIcon>
                                     <ListItemText>{item.text}</ListItemText>
