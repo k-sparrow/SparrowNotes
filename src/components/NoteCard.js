@@ -1,33 +1,47 @@
 import {  DeleteOutlined } from "@mui/icons-material";
-import { Card, CardContent, CardHeader, IconButton, Typography } from "@mui/material";
+import { Avatar, Card, CardContent, CardHeader, IconButton, Typography } from "@mui/material";
+import { yellow, blue, green, lightGreen } from "@mui/material/colors";
 import React from "react";
 
 
 
 const NoteCard = ({note, handleDelete}) => {
+    var noteColor = 'black';
+    switch (note.category) {
+        case "work":
+            noteColor = yellow[600];
+            break;
+
+        case "personal":
+            noteColor = blue[500];
+            break;
+
+        case "todo":
+            noteColor =  lightGreen[500];
+            break;
+        default:
+            break;
+    }
+
     return (
         <div>
             <Card
                 elevation={2}
                 sx={{
-                    border: () => {
-                        var border_value = '1px solid';
-                        var border_color;
-                        switch(note.category) {
-                            case "work":     border_color = 'yellow'; break;
-                            case "personal": border_color = 'blue';   break;
-                            case "todo":     border_color = 'green';  break;
-                            default:         border_color = 'black';  break;
-                        }
-
-                        return [border_value, border_color].join(' ');
-                    }
+                    border: `1px solid ${noteColor}`
                 }}>
                 <CardHeader
                     action={
                         <IconButton onClick={() => handleDelete(note.id)}>
                             <DeleteOutlined/>
                         </IconButton>
+                    }
+                    avatar={
+                        <Avatar sx={{
+                            backgroundColor: noteColor
+                        }}>
+                            {note.category[0].toUpperCase()}
+                        </Avatar>
                     }
                     title={note.title}
                     subheader={note.category}
