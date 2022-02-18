@@ -44,7 +44,7 @@ function Layout({children}) {
             <AppBar
                 elevation={1}
                 sx={{
-                    width: (theme) => {return `calc(100% - ${240}px)`;},
+                    width: (theme) => {return `calc(100% - ${theme.drawerWidth}px)`;},
                     color: 'black',
                     backgroundColor: 'white'
                 }}>

@@ -4,6 +4,7 @@ import React from 'react';
 const drawerWidth = 240;
 
 const mainTheme = createTheme({
+    drawerWidth: drawerWidth,
     components: {
         MuiDrawer: {
             styleOverrides: {
