@@ -19,6 +19,7 @@ function Notes() {
         const newNotes = notes.filter((note) => note.id != id);
         setNotes(newNotes);
     }
+
     return (
         <Container>
             <Grid container spacing={3}>
