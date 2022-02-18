@@ -1,30 +1,22 @@
-import { Container, Drawer, Typography } from "@mui/material";
+import { Drawer, Typography } from "@mui/material";
+import { styled } from "@mui/system";
 import React from "react";
 
-const drawerWidth = 240;
 
-const classes = {
-    page: {
-        background: '#f9f9f9',
-        width: '100%',
-    },
-
-    drawer: {
-        width: drawerWidth
-    },
-    drawerPaper: {
-        width: drawerWidth
-    }
-}
+const StyledMainDiv = styled('div', {
+    name: "StyledMainDiv",
+    slot: "Wrapper"
+})`
+    width: 100%;
+    background-color: #f9f9f9;
+`;
 
 function Layout({children}) {
     return (
-        <div>
+        <div style={{display: 'flex', height: '100%'}}>
             <Drawer
-                sx={classes.drawer}
                 variant="permanent"
                 anchor="left"
-                classes={{paper: classes.drawerPaper}}
                 >
 
                 <div>
@@ -34,9 +26,9 @@ function Layout({children}) {
                 </div>
             </Drawer>
 
-            <Container sx={classes.page} maxWidth='false'>
+            <StyledMainDiv>
                 {children}
-            </Container>
+            </StyledMainDiv>
         </div>
     );
 }
