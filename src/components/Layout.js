@@ -7,11 +7,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const StyledMainDiv = styled('div', {
     name: "StyledMainDiv",
-    slot: "Wrapper"
-})`
-    width: 100%;
-    background-color: #f9f9f9;
-`;
+    slot: "Wrapper",
+})(({theme}) => {
+    return ({
+        width: '100%',
+        backgroundColor: '#f9f9f9',
+        padding: theme.spacing(6)
+    });
+});
 
 function Layout({children}) {
     const navigate = useNavigate();
@@ -33,12 +36,12 @@ function Layout({children}) {
         <div style={{display: 'flex', height: '100%'}}>
             <Drawer
                 variant="permanent"
-                anchor="left"
+                // anchor="left"
                 >
 
-                <div>
-                    <Typography variant="h5">
-                        Ninja Notes
+                <div >
+                    <Typography variant="h5" sx={{padding: 2}}>
+                        Sparrow Notes
                     </Typography>
                 </div>
 
