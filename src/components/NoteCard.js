@@ -1,7 +1,7 @@
 import {  DeleteOutlined } from "@mui/icons-material";
 import { Avatar, Card, CardContent, CardHeader, IconButton, Typography } from "@mui/material";
 import { yellow, blue,  red } from "@mui/material/colors";
-import React from "react";
+import React, { useState } from "react";
 
 
 
@@ -23,13 +23,22 @@ const NoteCard = ({note, handleDelete}) => {
             break;
     }
 
+    const [clicked, setClicked] = useState(false);
+    const [elevation, setElevation] = useState(false);
     return (
         <div>
             <Card
-                elevation={2}
-                sx={{
-                    border: `1px solid ${noteColor}`
-                }}>
+                onClick={() => {setClicked(!clicked); setElevation(true);}}
+                onMouseOver={() => setElevation(true)}
+                onMouseOut={() => { if (!clicked) setElevation(false);}}
+                raised
+                elevation={elevation ? 10 : 1}
+                sx={ () => { return {
+                    border: `1px solid ${noteColor}`,
+                    backgroundColor: clicked ? noteColor : 'white',
+                    transition: "transform 0.15s ease-in-out",
+                    "&:hover": {transform: "scale3d(1.075, 1.075, 1.0)"}
+                }}}>
                 <CardHeader
                     action={
                         <IconButton onClick={() => handleDelete(note.id)}>
@@ -38,13 +47,18 @@ const NoteCard = ({note, handleDelete}) => {
                     }
                     avatar={
                         <Avatar sx={{
-                            backgroundColor: noteColor
+                            backgroundColor: clicked ? 'white' : noteColor,
+                            color: !clicked ?  'white' : noteColor
+
                         }}>
                             {note.category[0].toUpperCase()}
                         </Avatar>
                     }
                     title={note.title}
                     subheader={note.category}
+                    sx={{
+                            color: clicked ?  'white' : 'black'
+                    }}
                     />
 
                 <CardContent>
