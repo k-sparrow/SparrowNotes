@@ -15,6 +15,10 @@ const mainTheme = createTheme({
                 }
             }
         },
+    },
+
+    typography: {
+        fontFamily: ['Quicksand']
     }
 });
 
