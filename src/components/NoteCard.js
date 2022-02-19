@@ -34,7 +34,7 @@ const NoteCard = ({note, handleDelete}) => {
                 raised
                 elevation={elevation ? 10 : 1}
                 sx={ () => { return {
-                    border: `1px solid ${noteColor}`,
+                    border: () => {return clicked ? '1px solid white': `1px solid ${noteColor}`},
                     backgroundColor: clicked ? noteColor : 'white',
                     transition: "transform 0.15s ease-in-out",
                     "&:hover": {transform: "scale3d(1.075, 1.075, 1.0)"}
