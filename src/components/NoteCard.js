@@ -1,8 +1,36 @@
 import {  DeleteOutlined } from "@mui/icons-material";
 import { Avatar, Card, CardContent, CardHeader, IconButton, Typography } from "@mui/material";
 import { yellow, blue,  red } from "@mui/material/colors";
+import { styled } from "@mui/system";
 import React, { useState } from "react";
 
+
+const StyledCard = styled(Card, {name: "StyledCard", slot: "Wrapper"})
+    (({noteColor, clicked, theme}) => {
+        return ({
+                border: `1px solid ${noteColor}`,
+                backgroundColor: clicked ? noteColor : 'white',
+                transition: "transform 0.15s ease-in-out",
+                "&:hover" : { transform: "scale3d(1.075, 1.075, 1.0)" },
+
+                ".MuiCardHeader-root": {
+                        color: clicked ? 'white' : 'black',
+                        ".MuiCardHeader-subheader": {
+                            color: clicked ? 'white' : 'theme.pallette.secondary'
+                        },
+                        ".MuiAvatar-root": {
+                            backgroundColor: clicked ? 'white' : noteColor,
+                            color: !clicked ?  'white' : noteColor
+                        }
+                },
+
+                ".MuiCardContent-root": {
+                    color: clicked ?  'white' : "rgba(0,0,0,0.6)",
+                    whiteSpace: 'pre-wrap'
+                }
+        });
+    }
+);
 
 
 const NoteCard = ({note, handleDelete}) => {
@@ -27,18 +55,15 @@ const NoteCard = ({note, handleDelete}) => {
     const [elevation, setElevation] = useState(false);
     return (
         <div>
-            <Card
+            <StyledCard
                 onClick={() => {setClicked(!clicked); setElevation(true);}}
                 onMouseOver={() => setElevation(true)}
                 onMouseOut={() => { if (!clicked) setElevation(false);}}
                 raised
+                noteColor={noteColor}
+                clicked={clicked}
                 elevation={elevation ? 10 : 1}
-                sx={ () => { return {
-                    border: () => {return clicked ? '1px solid white': `1px solid ${noteColor}`},
-                    backgroundColor: clicked ? noteColor : 'white',
-                    transition: "transform 0.15s ease-in-out",
-                    "&:hover": {transform: "scale3d(1.075, 1.075, 1.0)"}
-                }}}>
+                >
                 <CardHeader
                     action={
                         <IconButton onClick={() => handleDelete(note.id)}>
@@ -46,27 +71,20 @@ const NoteCard = ({note, handleDelete}) => {
                         </IconButton>
                     }
                     avatar={
-                        <Avatar sx={{
-                            backgroundColor: clicked ? 'white' : noteColor,
-                            color: !clicked ?  'white' : noteColor
-
-                        }}>
+                        <Avatar>
                             {note.category[0].toUpperCase()}
                         </Avatar>
                     }
                     title={note.title}
                     subheader={note.category}
-                    sx={{
-                            color: clicked ?  'white' : 'black'
-                    }}
                     />
 
                 <CardContent>
-                    <Typography variant="body2" color="textSecondary" sx={{whiteSpace: 'pre-wrap'}}>
+                    <Typography variant="body2">
                         {note.details}
                     </Typography>
                 </CardContent>
-            </Card>
+            </StyledCard>
         </div>
     );
 }
