@@ -4,6 +4,7 @@ import { styled } from "@mui/system";
 import { format } from "date-fns";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 
 const StyledMainDiv = styled('div', {
     name: "StyledMainDiv",
@@ -29,16 +30,22 @@ function Layout({children}) {
 
     const menuItems = [
         {
+            text: 'Create Note',
+            icon: <AddCircleOutlineOutlined color="secondary" />,
+            path: '/Create'
+        },
+        {
             text: 'My Notes',
             icon: <SubjectOutlined color="secondary" />,
             path: '/'
         },
         {
-            text: 'Create Note',
-            icon: <AddCircleOutlineOutlined color="secondary" />,
-            path: '/Create'
+            text: 'Archive',
+            icon: <ArchiveOutlinedIcon color="secondary" />,
+            path: '/Archive'
         }
     ]
+
     return (
         <div style={{display: 'flex', height: '100%'}}>
             <AppBar
