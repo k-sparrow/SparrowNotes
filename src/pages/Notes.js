@@ -15,8 +15,23 @@ function Notes() {
     }, []);
 
     const handleDelete = async (id) => {
+        // get the data from the notes column before deleting
+        var data = await fetch('http://localhost:8000/notes/' + id)
+                            .then(rsp => rsp.json());
+        console.log("Data is " + data);
+        delete data.id;
+
+        // delete the note from the notes column
         await fetch('http://localhost:8000/notes/' + id, { method: 'DELETE' });
 
+        // push the note into the archive column
+        await fetch('http://localhost:8000/archive/', {
+            method: 'POST',
+            headers: {'Content-type': "application/json"},
+            body: JSON.stringify(data)
+        });
+
+        // update the notes view
         const newNotes = notes.filter((note) => note.id != id);
         setNotes(newNotes);
     }

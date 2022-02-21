@@ -15,9 +15,11 @@ const StyledCard = styled(Card, {name: "StyledCard", slot: "Wrapper"})
 
                 ".MuiCardHeader-root": {
                         color: clicked ? 'white' : 'black',
+
                         ".MuiCardHeader-subheader": {
                             color: clicked ? 'white' : 'theme.pallette.secondary'
                         },
+
                         ".MuiAvatar-root": {
                             backgroundColor: clicked ? 'white' : noteColor,
                             color: !clicked ?  'white' : noteColor
