@@ -32,7 +32,7 @@ function Layout({children}) {
         {
             text: 'Create Note',
             icon: <AddCircleOutlineOutlined color="secondary" />,
-            path: '/Create'
+            path: '/create'
         },
         {
             text: 'My Notes',
@@ -42,7 +42,7 @@ function Layout({children}) {
         {
             text: 'Archive',
             icon: <ArchiveOutlinedIcon color="secondary" />,
-            path: '/Archive'
+            path: '/archive'
         }
     ]
 

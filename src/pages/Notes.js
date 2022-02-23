@@ -17,7 +17,7 @@ function Notes() {
     const handleDelete = async (id) => {
         // get the data from the notes column before deleting
         var data = await fetch('http://localhost:8000/notes/' + id)
-                            .then(rsp => rsp.json());
+                         .then(rsp => rsp.json());
         delete data.id;
 
         // delete the note from the notes column
