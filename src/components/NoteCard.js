@@ -1,8 +1,9 @@
-import { ArchiveOutlined, CalendarViewDayOutlined, DeleteOutlined, MoreVertRounded } from "@mui/icons-material";
-import { Avatar, Card, CardContent, CardHeader, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Typography } from "@mui/material";
+import { ArchiveOutlined, CalendarTodayOutlined,  DeleteOutlined, } from "@mui/icons-material";
+import { Avatar, Card, CardContent, CardHeader,  Typography } from "@mui/material";
 import { yellow, blue,  red } from "@mui/material/colors";
 import { styled } from "@mui/system";
-import React, { useState } from "react";
+import React, { Component } from "react";
+import NoteMenuActionIcons from "./NoteMenuActionIcons";
 
 const StyledCard = styled(Card, {name: "StyledCard", slot: "Wrapper"})
     (({noteColor, clicked, theme}) => {
@@ -33,114 +34,100 @@ const StyledCard = styled(Card, {name: "StyledCard", slot: "Wrapper"})
     }
 );
 
-const NoteMenuActionIcons = ({anchorEl, onClickChoose, onClickClose, iconProps}) => {
-    return (
-        <>
-            <IconButton
-                aria-label="more"
-                aria-haspopup="true"
-                aria-controls="long-menu"
-                onClick={onClickChoose}
-            >
-                <MoreVertRounded />
-            </IconButton>
-            <Menu
-                anchorEl={anchorEl}
-                keepMounted
-                onClose={onClickClose}
-                open={Boolean(anchorEl)}
-            >
-                {iconProps.map((props) => {
-                        return (
-                            <MenuItem onClick={props.onClick} >
-                                <ListItemIcon>
-                                    {props.icon}
-                                    <ListItemText>{props.text}</ListItemText>
-                                </ListItemIcon>
-                            </MenuItem>
-                        );
-                    })
-                }
-            </Menu>
-        </>
-    );
-}
+class NoteCard2 extends Component {
+    constructor(props) {
+        super(props);
 
-const NoteCard = ({note, handleDelete}) => {
-    var noteColor = 'black';
-    switch (note.category) {
-        case "work":
-            noteColor = yellow[600];
-            break;
+        this.state = {
+            clicked: false,
+            elevation: false
+        }
 
-        case "personal":
-            noteColor = blue[500];
-            break;
+        this.noteColor = 'black';
 
-        case "todo":
-            noteColor =  red[500];
-            break;
-        default:
-            break;
+        switch (this.props.note.category) {
+            case "work":
+                this.noteColor = yellow[600];
+                break;
+
+            case "personal":
+                this.noteColor = blue[500];
+                break;
+
+            case "todo":
+                this.noteColor = red[500];
+                break;
+            default:
+                break;
+        }
     }
 
-    const [clicked, setClicked] = useState(false);
-    const [elevation, setElevation] = useState(false);
-    const [anchorEl, setAnchorEl] = useState(null);
+    render() {
+        return (
+            <div>
+                <StyledCard
+                    onClick={() => {this.setState({clicked: !this.state.clicked, elevation: true});}}
+                    onMouseOver={() => this.setState({elevation: true})}
+                    onMouseOut={() => { if (!this.state.clicked) this.setState({elevation: false})}}
+                    raised
+                    noteColor={this.noteColor}
+                    clicked={this.state.clicked}
+                    elevation={this.state.elevation ? 10 : 1}
+                    >
+                    <CardHeader
+                        action={
+                            <NoteMenuActionIcons
+                                iconProps={this.props.iconProps}
+                            />
+                        }
+                        avatar={
+                            <Avatar>
+                                {this.props.note.category[0].toUpperCase()}
+                            </Avatar>
+                        }
+                        title={this.props.note.title}
+                        subheader={this.props.note.category}
+                        />
 
-    const iconActionProps = {
-        onClickChoose: (e) => setAnchorEl(e.currentTarget),
-        onClickClose : (e) => setAnchorEl(null),
-        anchorEl: anchorEl,
+                    <CardContent>
+                        <Typography variant="body2">
+                            {this.props.note.details}
+                        </Typography>
+                    </CardContent>
+                </StyledCard>
+            </div>
+        );
+    }
+}
+
+
+const NoteCard = ({note, handleDelete}) => {
+    var iconActionProps = {
         iconProps: [
             {
-                onClick: (e) => setAnchorEl(null),
+                onClick: (e) => { handleDelete(note.id) },
                 icon: <DeleteOutlined/>,
-                text: "Delete"
+                text: " Delete"
             },
             {
-                onClick: (e) => setAnchorEl(null),
+                onClick: (e) => {},
                 icon: <ArchiveOutlined/>,
-                text: "Archive"
+                text: " Archive"
             }
         ]
     }
 
+    if (note.category === "work") {
+        iconActionProps.iconProps.push({
+            onClick: (e) => {},
+            icon: <CalendarTodayOutlined />,
+            text: " Weekly"
+        })
+    }
+
     return (
         <div>
-            <StyledCard
-                onClick={() => {setClicked(!clicked); setElevation(true);}}
-                onMouseOver={() => setElevation(true)}
-                onMouseOut={() => { if (!clicked) setElevation(false);}}
-                raised
-                noteColor={noteColor}
-                clicked={clicked}
-                elevation={elevation ? 10 : 1}
-                >
-                <CardHeader
-                    action={
-                        <NoteMenuActionIcons
-                            onClickChoose={iconActionProps.onClickChoose}
-                            onClickClose={iconActionProps.onClickClose}
-                            anchorEl={iconActionProps.anchorEl}
-                            iconProps={iconActionProps.iconProps}
-                        />
-                    }
-                    avatar={
-                        <Avatar>
-                            {note.category[0].toUpperCase()}
-                        </Avatar>
-                    }
-                    title={note.title}
-                    subheader={note.category}
-                    />
-
-                <CardContent>
-                    <Typography variant="body2">
-                        {note.details}
-                    </Typography>
-                </CardContent>
-            </StyledCard>
+            <NoteCard2 iconProps={iconActionProps.iconProps} note={note} />
         </div>
     );
 }
