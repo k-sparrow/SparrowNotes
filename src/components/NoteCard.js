@@ -1,4 +1,3 @@
-import { ArchiveOutlined, CalendarTodayOutlined,  DeleteOutlined, } from "@mui/icons-material";
 import { Avatar, Card, CardContent, CardHeader,  Typography } from "@mui/material";
 import { yellow, blue,  red } from "@mui/material/colors";
 import { styled } from "@mui/system";
@@ -34,7 +33,7 @@ const StyledCard = styled(Card, {name: "StyledCard", slot: "Wrapper"})
     }
 );
 
-class NoteCard2 extends Component {
+class NoteCard extends Component {
     constructor(props) {
         super(props);
 
@@ -43,6 +42,12 @@ class NoteCard2 extends Component {
             elevation: false
         }
 
+        this.iconProps = this.props.iconProps.map(({onClick, ...props}) => {
+            return {
+                ...props,
+                onClick: (e) => onClick(this.props.note.id)
+            };
+        })
         this.noteColor = 'black';
 
         switch (this.props.note.category) {
@@ -77,7 +82,7 @@ class NoteCard2 extends Component {
                     <CardHeader
                         action={
                             <NoteMenuActionIcons
-                                iconProps={this.props.iconProps}
+                                iconProps={this.iconProps}
                             />
                         }
                         avatar={
@@ -98,38 +103,6 @@ class NoteCard2 extends Component {
             </div>
         );
     }
-}
-
-
-const NoteCard = ({note, handleDelete}) => {
-    var iconActionProps = {
-        iconProps: [
-            {
-                onClick: (e) => { handleDelete(note.id) },
-                icon: <DeleteOutlined/>,
-                text: " Delete"
-            },
-            {
-                onClick: (e) => {},
-                icon: <ArchiveOutlined/>,
-                text: " Archive"
-            }
-        ]
-    }
-
-    if (note.category === "work") {
-        iconActionProps.iconProps.push({
-            onClick: (e) => {},
-            icon: <CalendarTodayOutlined />,
-            text: " Weekly"
-        })
-    }
-
-    return (
-        <div>
-            <NoteCard2 iconProps={iconActionProps.iconProps} note={note} />
-        </div>
-    );
 }
 
 

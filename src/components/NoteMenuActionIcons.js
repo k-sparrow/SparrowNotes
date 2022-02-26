@@ -32,7 +32,7 @@ class NoteMenuActionIcons extends Component {
                 >
                     {this.props.iconProps.map((props) => {
                             return (
-                                <MenuItem onClick={(e) => {props.onClick(e); this.state.onClickClose(e);}} >
+                                <MenuItem key={props.text} onClick={(e) => {props.onClick(e); this.state.onClickClose(e);}} >
                                     <ListItemIcon>
                                         {props.icon}
                                         <ListItemText>{props.text}</ListItemText>
