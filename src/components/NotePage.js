@@ -3,6 +3,7 @@ import { ArchiveOutlined, DeleteOutlined } from "@mui/icons-material";
 import { Container } from "@mui/material";
 import Masonry from "react-masonry-css";
 import NoteCard from "../components/NoteCard";
+import RestoreFromTrashOutlinedIcon from '@mui/icons-material/RestoreFromTrashOutlined';
 
 class NotesPage extends Component {
     rel_uri;
@@ -78,11 +79,14 @@ class MainNotesPage extends NotesPage {
         this.archive_uri = 'archive';
         this.archive_db_uri = [this.base_uri, this.archive_uri].join('/');
 
-        this.iconProps.push({
-            onClick: this.handleSendToArchive.bind(this),
-            icon: <ArchiveOutlined />,
-            text: 'Archive'
-        });
+
+        this.iconProps.push(...[
+            {
+                onClick: this.handleSendToArchive.bind(this),
+                icon: <ArchiveOutlined />,
+                text: 'Archive'
+            }
+        ]);
     }
 
     async handleSendToArchive(id) {
@@ -114,6 +118,34 @@ class ArchiveNotesPage extends NotesPage {
 
         this.rel_uri = 'archive';
         this.page_db_uri = [this.base_uri, this.rel_uri].join('/');
+
+        this.restore_uri = 'notes';
+        this.restore_db_uri = [this.base_uri, this.restore_uri].join('/');
+
+        this.iconProps.push(...[
+            {
+                onClick: this.handleRestoreToNotes.bind(this),
+                icon: <RestoreFromTrashOutlinedIcon />,
+                text: "Restore"
+            }
+        ])
+    }
+
+    async handleRestoreToNotes(id) {
+        // get the data from the notes column before deleting
+        var data = await fetch([this.page_db_uri, id].join('/'))
+                         .then(rsp => rsp.json());
+        delete data.id;
+
+        // delete the entry in the DB
+        this.handleDelete(id);
+
+        // push the entry back to the restored DB colum
+        await fetch(this.restore_db_uri, {
+            method: 'POST',
+            headers: {'Content-type': "application/json"},
+            body: JSON.stringify(data)
+        })
     }
 }
 export { NotesPage, MainNotesPage, ArchiveNotesPage };
