@@ -128,7 +128,7 @@ class ArchiveNotesPage extends NotesPage {
                 icon: <RestoreFromTrashOutlinedIcon />,
                 text: "Restore"
             }
-        ])
+        ]);
     }
 
     async handleRestoreToNotes(id) {
@@ -145,7 +145,7 @@ class ArchiveNotesPage extends NotesPage {
             method: 'POST',
             headers: {'Content-type': "application/json"},
             body: JSON.stringify(data)
-        })
+        });
     }
 }
 export { NotesPage, MainNotesPage, ArchiveNotesPage };

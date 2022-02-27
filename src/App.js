@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import Create from './pages/Create';
 import Notes from './pages/Notes';
 import Archive from './pages/Archive';
+import ProjGantt from './pages/Gantt';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
             <Route exact path="/" element={<Notes />} />
             <Route path="/create" element={<Create />} />
             <Route path="/archive" element={<Archive />} />
+            <Route path="/gantt" element={<ProjGantt />} />
           </Routes>
         </Layout>
       </Router>

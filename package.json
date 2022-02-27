@@ -42,5 +42,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gantt-task-react": "^0.3.8",
+    "react-frappe-gantt": "^0.2.3",
+    "sass": "^1.49.9"
   }
 }
